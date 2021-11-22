@@ -1,24 +1,6 @@
-# movie-listing
+# [movie-listing](https://giomikee.github.io/movie-listing/)
 
-## Project setup
-```
-npm install
-```
+Search movies released in 2020 and find out more details about them with this helpful tool. [Check it out here](https://giomikee.github.io/movie-listing/)
+Project made using `Vue 2` with `Vue composition API` and `Vuetify` plugins
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+Powered by [_OMDB API_](http://www.omdbapi.com/)

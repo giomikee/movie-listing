@@ -6,11 +6,25 @@
 					<movie-searcher
 						@updatedSearchResults="updateSearchResults"
 						@searchLoading="handleSearchLoading"
+						@tooManyResults="handleTooManyResults"
+						@zeroResult="handleZeroResult"
 					/>
 				</v-col>
 
 				<v-col v-if="loading" cols="12" class="text-center">
 					<v-progress-circular color="teal" indeterminate size="70" />
+				</v-col>
+
+				<v-col
+					v-else-if="hasTooManyResults"
+					cols="12"
+					class="text-center"
+				>
+					Too many results. Keep searching!
+				</v-col>
+
+				<v-col v-else-if="isZeroResult" cols="12" class="text-center">
+					No movies found
 				</v-col>
 
 				<v-row v-else-if="items.length > 0">
@@ -57,6 +71,8 @@ export default {
 		const searchValue = ref('');
 		const loading = ref(false);
 		const isNextPageLoading = ref(false);
+		const hasTooManyResults = ref(false);
+		const isZeroResult = ref(false);
 		const error = ref(null);
 		const hasMultiplePages = computed(
 			() => pages.value > 1 && currentPage.value < pages.value
@@ -86,6 +102,12 @@ export default {
 					isNextPageLoading.value = false;
 				});
 		};
+		const handleTooManyResults = event => {
+			hasTooManyResults.value = event;
+		};
+		const handleZeroResult = event => {
+			isZeroResult.value = event;
+		};
 
 		return {
 			loading,
@@ -93,8 +115,12 @@ export default {
 			error,
 			items,
 			hasMultiplePages,
+			hasTooManyResults,
+			isZeroResult,
 			updateSearchResults,
 			handleSearchLoading,
+			handleTooManyResults,
+			handleZeroResult,
 			fetchNextPage
 		};
 	}
