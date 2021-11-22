@@ -20,15 +20,16 @@
 import { ref, watch, reactive } from '@vue/composition-api';
 import { fetchSearchResults } from '../utils/fetch-movie-utils';
 import ErrorDialog from './ErrorDialog.vue';
-const falseNegativeErrors = ['Too many results.', 'Movie not found!'];
+
+const falsePositiveErrors = ['Too many results.', 'Movie not found!'];
 const oneSecond = 1000;
 
-const handleFalseNegativeErrors = (error, context) => {
+const handleFalsePositiveErrors = (error, context) => {
 	switch (error) {
-		case falseNegativeErrors[0]:
+		case falsePositiveErrors[0]:
 			context.emit('tooManyResults', true);
 			break;
-		case falseNegativeErrors[1]:
+		case falsePositiveErrors[1]:
 			context.emit('zeroResult', true);
 			break;
 	}
@@ -71,11 +72,11 @@ export default {
 						const { Search, Error, totalResults } = response;
 
 						if (Error) {
-							if (!falseNegativeErrors.includes(Error)) {
+							if (!falsePositiveErrors.includes(Error)) {
 								return Promise.reject(Error);
 							}
 
-							handleFalseNegativeErrors(Error, context);
+							handleFalsePositiveErrors(Error, context);
 						} else {
 							items.value.length = 0;
 							items.value.push(
